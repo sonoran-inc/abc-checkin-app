@@ -33,7 +33,7 @@ class LanguageScreen extends React.Component {
   render() {
     return (
       <View style={styles.languagescreen}>
-        <Text>Choose Language</Text>
+        <Text>Please choose Language</Text>
       </View>
     );
   }
