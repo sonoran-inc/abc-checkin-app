@@ -7,8 +7,11 @@
  */
 
 import React from 'react';
-import { Platform, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native';
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { Platform, StyleSheet, Text, View , Image, TextInput } from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Button, CheckBox, Icon } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -39,7 +42,7 @@ class RegistrationScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username: '', mailaddress: '', pass1: '', pass2:'' };
+    this.state = {username: '', mailaddress: '', pass1: '', pass2: '', checked: 'true' };
   }
 
   render() {
@@ -72,22 +75,49 @@ class RegistrationScreen extends React.Component {
             placeholder="パスワード確認"
             value={this.state.pass2}
           />
+          <CheckBox
+            title=' '
+            checkedIcon='check-square-o'
+            uncheckedIcon='square-o'
+            //checked={this.state.checked}
+            containerStyle={{
+              backgroundColor: 'white',
+              borderColor: 'white',
+            }}
+          />
           <Text style={{
             fontSize: 20,
             textAlign: 'center',
             padding: 20,
           }}>
-            □ 利用規約に同意する
+            利用規約に同意する
           </Text>
         </View>
-        <View style={styles.nextbutton}>
-          <Button
+        <Button
             onPress={this.doAction}
             title="次へ"
-            color="#ffffff"
-            fontSize="40"
-          />
-        </View>
+            buttonStyle={styles.nextbutton}
+            titleStyle={{
+              fontSize: 30,
+            }}
+        />
+        <Text style={{
+
+        }}>
+        アカウントお持ちの方はこちらから
+        </Text>
+        <Button
+          onPress={this.do2Action}
+          title='ログイン'
+          type='clear'
+          titleStyle={{
+            color: 'blue'
+          }}
+          containerStyle={{
+            borderBottomColor: 'blue',
+            borderBottomWidth: 1,
+          }}
+        />
       </View>
     );
 
@@ -96,6 +126,64 @@ class RegistrationScreen extends React.Component {
   doAction = ()=>{
     this.props.navigation.navigate('Language')
   }
+
+  do2Action = ()=>{
+    this.props.navigation.navigate('Login')
+  }
+}
+
+class LoginScreen extends React.Component {
+  static navigationOptions = {
+    headerTitle: <LogoTitle />,
+    headerStyle: {
+      backgroundColor: '#FFFFFF',
+      height: 70,
+    },
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = { mailaddress: '', pass1: '' };
+  }
+
+  render() {
+    return(
+      <View style={styles.loginscreen}>
+        <Text style={styles.message1}>ABCチェックインにログイン</Text>
+        <View style={{
+          height: 360,
+          width: 500,
+          padding: 20,
+          backgroundColor: '#ffffff',
+        }}>
+          <TextInput 
+            style={styles.input}
+            placeholder="メールアドレス"
+            value={this.state.mailaddress}
+          />
+          <TextInput 
+            style={styles.input}
+            placeholder="パスワード"
+            value={this.state.pass1}
+          />
+          
+        </View>
+        <Button
+            onPress={this.doAction}
+            title="次へ"
+            buttonStyle={styles.nextbutton}
+            titleStyle={{
+              fontSize: 30,
+            }}
+        />
+      </View>
+    );
+  }
+
+  doAction = ()=>{
+    this.props.navigation.navigate('Language')
+  }
+
 }
 
 class LanguageScreen extends React.Component {
@@ -119,6 +207,7 @@ class LanguageScreen extends React.Component {
 const AppNavigator = createStackNavigator(
   {
     Registration: {screen: RegistrationScreen},
+    Login: {screen: LoginScreen},
     Language: {screen: LanguageScreen}
   },
   {
@@ -134,15 +223,18 @@ const styles = StyleSheet.create({
     color: '#5C5C5C',
   },
   nextbutton: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    margin: 40,
     height: 80,
-    width: 300,
-    padding: 10,
-    margin: 20,
-    backgroundColor: '#feab2b'
+    width: 250,
+    backgroundColor: '#feab2b',
   },
   registrationscreen: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: '#EFEFF4',
+  },
+  loginscreen: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
